@@ -214,6 +214,7 @@ export type MapOptions = {
     scaleFactor?: number;
     spriteFormat?: SpriteFormat;
     pitchRotateKey?: PitchRotateKey;
+    skipTokenValidation?: boolean;
 };
 
 const defaultMinZoom = -2;
@@ -577,6 +578,7 @@ export class Map extends Camera {
     _frameId: number;
 
     _spriteFormat: SpriteFormat;
+    skipTokenValidation =  true;
 
     constructor(options: MapOptions) {
         LivePerformanceUtils.mark(LivePerformanceMarkers.create);
@@ -611,6 +613,7 @@ export class Map extends Camera {
         // @ts-expect-error - TS2345 - Argument of type 'MapOptions' is not assignable to parameter of type '{ bearingSnap: number; respectPrefersReducedMotion?: boolean; }'.
         super(transform, options);
 
+        this.skipTokenValidation = !!options.skipTokenValidation;
         this._repaint = !!options.repaint;
         this._interactive = options.interactive;
         this._minTileCacheSize = options.minTileCacheSize;
@@ -4565,7 +4568,8 @@ export class Map extends Camera {
                     vendor: this.painter.context.vendor
                 });
             }
-            this._authenticate();
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            this.skipTokenValidation && this._authenticate();
         }
     }
 
