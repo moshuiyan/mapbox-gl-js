@@ -57,7 +57,7 @@ export default ({watch}) => {
         // Next, bundle together the three "chunks" produced in the previous pass
         // into a single, final bundle. See rollup/bundle_prelude.js and
         // rollup/mapboxgl.js for details.
-        input: 'rollup/mapboxgl.js',
+        input: 'rollup/esm.js',
         output: {
             name: 'mapboxgl',
             file: 'dist/mapbox-gl-esm.js',
