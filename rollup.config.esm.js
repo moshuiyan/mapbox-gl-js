@@ -39,7 +39,7 @@ export default ({watch}) => {
         input: ['src/index.ts', 'src/source/worker.ts'],
         output: {
             dir: 'rollup/build/mapboxgl',
-            format: 'esm',
+            format: 'amd',
             sourcemap: false,
             indent: false,
             chunkFileNames: 'shared.js',
@@ -57,7 +57,7 @@ export default ({watch}) => {
         // Next, bundle together the three "chunks" produced in the previous pass
         // into a single, final bundle. See rollup/bundle_prelude.js and
         // rollup/mapboxgl.js for details.
-        input: 'rollup/esm.js',
+        input: 'rollup/mapboxgl.js',
         output: {
             name: 'mapboxgl',
             file: 'dist/mapbox-gl-esm.js',
@@ -69,36 +69,10 @@ export default ({watch}) => {
         },
         treeshake: false,
         plugins: [
-            // Ingest the sourcemaps produced in the first step of the build.
-            // This is the only reason we use Rollup for this second pass
-            sourcemaps({watch}),
         ]
     }];
 };
 
-function sourcemaps({watch}) {
-    const base64SourceMapRegExp = /\/\/# sourceMappingURL=data:[^,]+,([^ ]+)/;
-
-    return {
-        name: 'sourcemaps',
-        async load(id) {
-            const code = await readFile(id, {encoding: 'utf8'});
-            const match = base64SourceMapRegExp.exec(code);
-            if (!match) return;
-
-            const base64EncodedSourceMap = match[1];
-            const decodedSourceMap = Buffer.from(base64EncodedSourceMap, 'base64').toString('utf-8');
-            const map = JSON.parse(decodedSourceMap);
-
-            // Starting with Rollup 4.x, we need to explicitly watch files
-            // if their content is returned by the load hook.
-            // https://github.com/rollup/rollup/pull/5150
-            if (watch) this.addWatchFile(id);
-
-            return {code, map};
-        }
-    };
-}
 
 function onwarn(warning) {
     const styleSpecPath = path.resolve('src', 'style-spec');
