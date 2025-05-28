@@ -246,7 +246,7 @@ const defaultOptions = {
     touchZoomRotate: true,
     touchPitch: true,
     cooperativeGestures: false,
-    performanceMetricsCollection: true,
+    performanceMetricsCollection: false,
 
     bearingSnap: 7,
     clickTolerance: 3,
@@ -803,7 +803,7 @@ export class Map extends Camera {
             if (this.transform.unmodified) {
                 this.jumpTo((this.style.stylesheet as unknown));
             }
-            this._postStyleLoadEvent();
+            // this._postStyleLoadEvent();
         });
 
         this.on('data', (event) => {
@@ -2307,7 +2307,7 @@ export class Map extends Camera {
                     }
                 },
                 () => {
-                    this._postStyleLoadEvent();
+                    // this._postStyleLoadEvent();
                 });
             return this;
         } else {
@@ -4680,7 +4680,7 @@ export class Map extends Camera {
             }
         });
 
-        postMapLoadEvent(this._getMapId(), this._requestManager._skuToken, this._requestManager._customAccessToken, () => {});
+        // postMapLoadEvent(this._getMapId(), this._requestManager._skuToken, this._requestManager._customAccessToken, () => {});
     }
 
     /***** END WARNING - REMOVAL OR MODIFICATION OF THE

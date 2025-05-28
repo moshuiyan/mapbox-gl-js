@@ -47,21 +47,22 @@ const config: Config = {
     get API_CDN_URL_REGEX() {
         return /^((https?:)?\/\/)?api\.mapbox\.c(n|om)(\/mapbox-gl-js\/)(.*$)/i;
     },
-    get EVENTS_URL() {
-        if (!config.API_URL) { return null; }
-        try {
-            const url = new URL(config.API_URL);
-            if (url.hostname === 'api.mapbox.cn') {
-                return 'https://events.mapbox.cn/events/v2';
-            } else if (url.hostname === 'api.mapbox.com') {
-                return 'https://events.mapbox.com/events/v2';
-            } else {
-                return null;
-            }
-        } catch (e: any) {
-            return null;
-        }
-    },
+    // get EVENTS_URL() {
+    //     if (!config.API_URL) { return null; }
+    //     try {
+    //         const url = new URL(config.API_URL);
+    //         if (url.hostname === 'api.mapbox.cn') {
+    //             return 'https://events.mapbox.cn/events/v2';
+    //         } else if (url.hostname === 'api.mapbox.com') {
+    //             return 'https://events.mapbox.com/events/v2';
+    //         } else {
+    //             return null;
+    //         }
+    //     } catch (e: any) {
+    //         return null;
+    //     }
+    // },
+    EVENTS_URL: null,
     SESSION_PATH: '/map-sessions/v1',
     FEEDBACK_URL: 'https://apps.mapbox.com/feedback',
     TILE_URL_VERSION: 'v4',
