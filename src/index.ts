@@ -27,9 +27,9 @@ import {WorkerPerformanceUtils} from './util/worker_performance_utils';
 import {FreeCameraOptions} from './ui/free_camera';
 import {getDracoUrl, setDracoUrl, setMeshoptUrl, getMeshoptUrl} from '../3d-style/util/loaders';
 import browser from './util/browser';
+import {createPropertyExpression} from './style-spec/expression';
 
 import type {Class} from './types/class';
-import {Expression, createPropertyExpression} from './style-spec/expression';
 
 
 // Explicit type re-exports
@@ -84,7 +84,6 @@ const exported = {
     supported,
     setRTLTextPlugin,
     getRTLTextPluginStatus,
-    Expression,
     createPropertyExpression,
     Map,
     NavigationControl,
