@@ -29,6 +29,8 @@ import {getDracoUrl, setDracoUrl, setMeshoptUrl, getMeshoptUrl} from '../3d-styl
 import browser from './util/browser';
 
 import type {Class} from './types/class';
+import {Expression, createPropertyExpression} from './style-spec/expression';
+
 
 // Explicit type re-exports
 export type * from './ui/events';
@@ -82,6 +84,8 @@ const exported = {
     supported,
     setRTLTextPlugin,
     getRTLTextPluginStatus,
+    Expression,
+    createPropertyExpression,
     Map,
     NavigationControl,
     GeolocateControl,
