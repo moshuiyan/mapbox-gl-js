@@ -43,6 +43,7 @@ const RASTER_COLOR_TEXTURE_UNIT = 2;
 type RasterConfig = {
     defines: DynamicDefinesType[];
     mix: [number, number, number, number];
+    color1: [number, number, number, number];
     range: [number, number];
     offset: number;
     resampling: number;
@@ -127,7 +128,7 @@ function drawRaster(painter: Painter, sourceCache: SourceCache, layer: RasterSty
             context.activeTexture.set(gl.TEXTURE0);
             const textureDescriptor = getTextureDescriptor(tile, source, layer, rasterConfig);
             if (!textureDescriptor || !textureDescriptor.texture) continue;
-            const {texture, mix: rasterColorMix, offset: rasterColorOffset, tileSize, buffer} = textureDescriptor;
+            const {texture, mix: rasterColorMix, offset: rasterColorOffset,   tileSize, buffer} = textureDescriptor;
 
             let depthMode;
             let projMatrix;
@@ -234,6 +235,7 @@ function drawRaster(painter: Painter, sourceCache: SourceCache, layer: RasterSty
                 perspectiveTransform,
                 renderingWithElevation ? layer.paint.get('raster-elevation') : 0.0,
                 RASTER_COLOR_TEXTURE_UNIT,
+                rasterConfig.color1 || [1, 1, 1, 1],
                 rasterColorMix,
                 rasterColorOffset,
                 rasterConfig.range,
@@ -423,6 +425,7 @@ export function prepare(layer: RasterStyleLayer, sourceCache: SourceCache, _: Pa
 export type TextureDescriptor = {
     texture: Texture | null | undefined | UserManagedTexture;
     mix: [number, number, number, number];
+    colorMix: [number, number, number, number];
     offset: number;
     buffer: number;
     tileSize: number;
@@ -443,6 +446,7 @@ function getTextureDescriptor(
     return {
         texture: tile.texture,
         mix: adjustColorMix(rasterConfig.mix),
+        colorMix: rasterConfig.colorMix,
         offset: rasterConfig.offset,
         buffer: 0,
         tileSize: 1,
@@ -461,6 +465,7 @@ function configureRaster(
     const defines: DynamicDefinesType[] = [];
     const inputResampling = layer.paint.get('raster-resampling');
     const inputMix = layer.paint.get('raster-color-mix');
+    const color1 = layer.paint.get('raster-color1');
     let range = layer.paint.get('raster-color-range');
 
     // Unpack the offset for use in a separate uniform
@@ -511,6 +516,7 @@ function configureRaster(
 
     return {
         mix,
+        color1,
         range,
         offset,
         defines,

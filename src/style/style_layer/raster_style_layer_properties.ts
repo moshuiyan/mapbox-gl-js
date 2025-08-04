@@ -28,6 +28,7 @@ export type PaintProps = {
     "raster-opacity": DataConstantProperty<number>;
     "raster-color": ColorRampProperty;
     "raster-color-mix": DataConstantProperty<[number, number, number, number]>;
+    "raster-color1": DataConstantProperty<[number, number, number, number]>;
     "raster-color-range": DataConstantProperty<[number, number]>;
     "raster-hue-rotate": DataConstantProperty<number>;
     "raster-brightness-min": DataConstantProperty<number>;
@@ -46,6 +47,7 @@ let paint: Properties<PaintProps>;
 export const getPaintProperties = (): Properties<PaintProps> => paint || (paint = new Properties({
     "raster-opacity": new DataConstantProperty(styleSpec["paint_raster"]["raster-opacity"]),
     "raster-color": new ColorRampProperty(styleSpec["paint_raster"]["raster-color"]),
+    "raster-color1": new DataConstantProperty(styleSpec["paint_raster"]["raster-color1"]),
     "raster-color-mix": new DataConstantProperty(styleSpec["paint_raster"]["raster-color-mix"]),
     "raster-color-range": new DataConstantProperty(styleSpec["paint_raster"]["raster-color-range"]),
     "raster-hue-rotate": new DataConstantProperty(styleSpec["paint_raster"]["raster-hue-rotate"]),

@@ -38,6 +38,7 @@ export type RasterUniformsType = {
     ['u_merc_center']: Uniform2f;
     ['u_cutoff_params']: Uniform4f;
     ['u_colorization_mix']: Uniform4f;
+    ['u_color1']: Uniform4f;
     ['u_colorization_offset']: Uniform1f;
     ['u_color_ramp']: Uniform1i;
     ['u_texture_offset']: Uniform2f;
@@ -69,6 +70,7 @@ const rasterUniforms = (context: Context): RasterUniformsType => ({
     'u_zoom_transition': new Uniform1f(context),
     'u_merc_center': new Uniform2f(context),
     'u_cutoff_params': new Uniform4f(context),
+    'u_color1': new Uniform4f(context),
     'u_colorization_mix': new Uniform4f(context),
     'u_colorization_offset': new Uniform1f(context),
     'u_color_ramp': new Uniform1i(context),
@@ -96,6 +98,7 @@ const rasterUniformValues = (
     perspectiveTransform: [number, number],
     elevation: number,
     colorRampUnit: number,
+    color1: [number, number, number, number],
     colorMix: [number, number, number, number],
     colorOffset: number,
     colorRange: [number, number],
@@ -128,6 +131,7 @@ const rasterUniformValues = (
     'u_zoom_transition': zoomTransition,
     'u_merc_center': mercatorCenter,
     'u_cutoff_params': cutoffParams,
+    'u_color1': color1,
     'u_colorization_mix': computeRasterColorMix(COLOR_RAMP_RES, colorMix, colorRange),
     'u_colorization_offset': computeRasterColorOffset(COLOR_RAMP_RES, colorOffset, colorRange),
     'u_color_ramp': colorRampUnit,
@@ -152,6 +156,7 @@ const rasterPoleUniformValues = (
     perspectiveTransform: [number, number],
     elevation: number,
     colorRampUnit: number,
+    color1: [number, number, number, number],
     colorMix: [number, number, number, number],
     colorOffset: number,
     colorRange: [number, number],
@@ -172,6 +177,7 @@ const rasterPoleUniformValues = (
     perspectiveTransform || [0, 0],
     elevation,
     colorRampUnit,
+    color1,
     colorMix,
     colorOffset,
     colorRange,

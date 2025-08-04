@@ -34,6 +34,7 @@ uniform sampler2D u_image1;
 uniform sampler2D u_color_ramp;
 uniform highp vec4 u_colorization_mix;
 uniform highp float u_colorization_offset;
+uniform vec4 u_color1;
 uniform vec2 u_texture_res;
 #endif
 
@@ -127,6 +128,8 @@ void main() {
 #ifdef RENDER_CUTOFF
     glFragColor = glFragColor * cutoff_opacity(u_cutoff_params, v_depth);
 #endif
+
+    glFragColor = mix(glFragColor, vec3(u_color1.rgb,1.), u_color1.a);
 
 #ifdef OVERDRAW_INSPECTOR
     glFragColor = vec4(1.0);
