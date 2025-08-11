@@ -34,9 +34,9 @@ uniform sampler2D u_image1;
 uniform sampler2D u_color_ramp;
 uniform highp vec4 u_colorization_mix;
 uniform highp float u_colorization_offset;
-uniform vec4 u_color1;
 uniform vec2 u_texture_res;
 #endif
+uniform vec4 u_color1;
 
 
 void main() {
@@ -109,6 +109,7 @@ void main() {
     vec3 u_low_vec = vec3(u_brightness_high, u_brightness_high, u_brightness_high);
 
     vec3 out_color = mix(u_high_vec, u_low_vec, rgb);
+    out_color = mix(out_color, u_color1.rgb * out_color, u_color1.a);
 
 #ifdef LIGHTING_3D_MODE
     out_color = apply_lighting_with_emission_ground(vec4(out_color, 1.0), u_emissive_strength).rgb;
@@ -129,7 +130,6 @@ void main() {
     glFragColor = glFragColor * cutoff_opacity(u_cutoff_params, v_depth);
 #endif
 
-    glFragColor = mix(glFragColor, vec3(u_color1.rgb,1.), u_color1.a);
 
 #ifdef OVERDRAW_INSPECTOR
     glFragColor = vec4(1.0);

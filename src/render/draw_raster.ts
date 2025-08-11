@@ -382,7 +382,7 @@ function drawPole(isNorth: boolean, coord: OverscaledTileID | null | undefined, 
     }
     const rasterColorMix = adjustColorMix(rasterConfig.mix);
 
-    const uniformValues = rasterPoleUniformValues(projMatrix, normalizeMatrix, globeMatrix as Float32Array, globeToMercatorTransition(painter.transform.zoom), fade, layer, [0, 0], elevation, RASTER_COLOR_TEXTURE_UNIT, rasterColorMix, rasterConfig.offset, rasterConfig.range, emissiveStrength);
+    const uniformValues = rasterPoleUniformValues(projMatrix, normalizeMatrix, globeMatrix as Float32Array, globeToMercatorTransition(painter.transform.zoom), fade, layer, [0, 0], elevation, RASTER_COLOR_TEXTURE_UNIT, rasterConfig.color1, rasterColorMix, rasterConfig.offset, rasterConfig.range, emissiveStrength );
     const program = painter.getOrCreateProgram('raster', {defines});
 
     painter.uploadCommonUniforms(context, program, null);
@@ -425,7 +425,7 @@ export function prepare(layer: RasterStyleLayer, sourceCache: SourceCache, _: Pa
 export type TextureDescriptor = {
     texture: Texture | null | undefined | UserManagedTexture;
     mix: [number, number, number, number];
-    colorMix: [number, number, number, number];
+    color1: [number, number, number, number];
     offset: number;
     buffer: number;
     tileSize: number;
@@ -446,7 +446,7 @@ function getTextureDescriptor(
     return {
         texture: tile.texture,
         mix: adjustColorMix(rasterConfig.mix),
-        colorMix: rasterConfig.colorMix,
+        color1: rasterConfig.color1,
         offset: rasterConfig.offset,
         buffer: 0,
         tileSize: 1,

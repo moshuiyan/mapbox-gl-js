@@ -24,7 +24,7 @@ export type TextureDescriptor = {
     tileSize: number;
     buffer: number;
     mix: [number, number, number, number];
-    colorMix: [number, number, number, number];
+    color1: [number, number, number, number];
     offset: number;
     format?: 'uint8' | 'uint16' | 'uint32';
 };
@@ -270,6 +270,7 @@ class RasterArrayTile extends Tile {
             buffer,
             offset,
             tileSize,
+            color1: [0, 0, 0, 0],
             format: mrtLayer.pixelFormat,
             mix: [
                 scale,
